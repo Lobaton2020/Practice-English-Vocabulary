@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import swal from "sweetalert";
+import toastr from "toastr";
 import config from "../config";
 
 
@@ -26,12 +26,12 @@ export function Import({ onRebootCards }) {
                 config.KEY_INFO_LOCAL_STORARE,
                 JSON.stringify(arrayInfo)
             )
-            swal("Great!!","Importacion exitosa","success")
+            toastr.success("Importacion exitosa!")
             handleClose({})
             onRebootCards()
         } catch (err) {
             console.log(err, "IMPORT ERROR")
-            swal("Opps! ","Error del formato del texto importado","error")
+            toastr.error("Error del formato del texto importado")
         }
     };
     function ImportProcess() {

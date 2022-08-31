@@ -66,6 +66,11 @@ export function Cards({ arrayDict, onRebootCards }) {
         } else {
 
             currentElement.counter++;
+            if((currentElement.counter - 1) >= 3){
+                toastr.info("Attepmts fulled, We show you the correct answer")
+                inputRef.current.value = currentElement.data[1]
+            }
+
             toastr.error(`Try again, ${currentElement.counter - 1} attempts`)
             setCurrentElement({
                 ...currentElement,
