@@ -1,0 +1,3 @@
+export default{
+    KEY_INFO_LOCAL_STORARE: "FSDFJLSO04W"
+}
