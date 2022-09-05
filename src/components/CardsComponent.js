@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import toastr from 'toastr'
+import { ListVocabulary } from "./shared/ListVocabularyComponent";
 toastr.options.progressBar = true
 toastr.options.positionClass = 'toast-bottom-left'
 export function Cards({ arrayDict, onRebootCards }) {
@@ -99,21 +100,7 @@ export function Cards({ arrayDict, onRebootCards }) {
         try {
 
             if (showElementsDone) {
-                return (
-                    <ul className="list-group my-3">
-                        {elementsDone.map((item, i) => {
-                            console.log(item)
-                            const [espanol, english] = item.data;
-                            return (
-                                <li key={i} className="list-group-item">
-                                    <b>{english}</b>: {espanol}
-                                    <span className="badge">{item.counter} attempt/s</span>
-                                </li>
-                            )
-                        })}
-                    </ul>
-
-                )
+                return (<ListVocabulary arrayElements={elementsDone} />)
             }
         } catch (e) {
             console.log(e, "EEEE")
