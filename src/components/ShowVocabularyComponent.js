@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { DataService } from "../data/data.service";
 import { ListVocabulary } from "./shared/ListVocabularyComponent";
 
-export function ShowVocabulary() {
-    const [listVocabulary, _] = useState(DataService.loadInfo())
+export function ShowVocabulary({ vocabularyList }) {
     const [showButton, setShowButton] = useState(true)
-    if (listVocabulary.length == 0) {
+    if (vocabularyList.length == 0) {
         return (
             <>
                 <h1>Data not found</h1>
@@ -15,9 +13,10 @@ export function ShowVocabulary() {
 
 
     function ShowList() {
-        const dataParsed = listVocabulary.map(([key, value]) => ({ data: [value, key] }))
+        const dataParsed = vocabularyList.map(([key, value]) => ({ data: [value, key] }))
         return (
             <>
+                <button class="btn" onClick={() => setShowButton(!showButton)}>Cerrar</button>
                 <ListVocabulary arrayElements={dataParsed} showConter={false} />
             </>
         )

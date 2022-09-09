@@ -13,4 +13,13 @@ export class DataService {
             return []
         }
     }
+
+    static setInfo(data) {
+        try {
+            localStorage.setItem(config.KEY_INFO_LOCAL_STORARE, JSON.stringify(data));
+        } catch (err) {
+            toastr.error("Fail to import data")
+            console.error(err)
+        }
+    }
 }

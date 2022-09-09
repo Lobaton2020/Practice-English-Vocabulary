@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import toastr from "toastr";
 import config from "../config";
-
-
-
+import { DataService } from "../data/data.service";
 export function Import({ onRebootCards }) {
+
+
+
     const [showButton, setShowButton] = useState(true);
     const textAreaRef = useRef(null)
     const handleClose = (_) => {
@@ -22,13 +23,12 @@ export function Import({ onRebootCards }) {
                 }
                 return result
             })
-            localStorage.setItem(
-                config.KEY_INFO_LOCAL_STORARE,
-                JSON.stringify(arrayInfo)
-            )
+            DataService.setInfo(arrayInfo)
+
             toastr.success("Importacion exitosa!")
             handleClose({})
             onRebootCards()
+
         } catch (err) {
             console.log(err, "IMPORT ERROR")
             toastr.error("Error del formato del texto importado")

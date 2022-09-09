@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import toastr from 'toastr'
 import { ListVocabulary } from "./shared/ListVocabularyComponent";
 toastr.options.progressBar = true
-toastr.options.positionClass = 'toast-bottom-left'
-export function Cards({ arrayDict, onRebootCards }) {
+toastr.options.positionClass = 'toast-bottom-right'
+
+export function Cards({ arrayDict: information, onRebootCards }) {
     const inputRef = useRef(null)
-    const [information, setInformation] = useState(arrayDict);
     const [showButton, setShowButton] = useState(true)
     const [elementsDone, setElementsDone] = useState([])
     const [showElementsDone, setsShowElementsDone] = useState(false)
@@ -13,27 +13,28 @@ export function Cards({ arrayDict, onRebootCards }) {
 
 
     useEffect(() => {
-        setInformation(arrayDict)
         setsShowElementsDone(false)
-        if (information.length == 0) {
-            toastr.info("Plase import a fields")
+        setCurrentElementHelp()
+    }, [information])
+
+    const setCurrentElementHelp = () => {
+        const max = information.length;
+        if (!max) {
+            toastr.info("Plase import a fields__")
             return
         }
-        addACurrentValue()
-    }, [arrayDict])
-
-    const addACurrentValue = () => {
-        const max = information.length;
         const randIndex = Math.floor(Math.random() * max)
         if (information[randIndex] == null) return
         setCurrentElement({
             counter: 1,
             data: [...information[randIndex]]
         })
-        const newInfo = information.filter((_, i) => i != randIndex);
-        setInformation(newInfo)
     }
     const handleClose = (e) => {
+        onRebootCards()
+        setElementsDone([])
+        setsShowElementsDone(false)
+        setCurrentElementHelp()
         setShowButton(!showButton)
     };
 
@@ -48,7 +49,8 @@ export function Cards({ arrayDict, onRebootCards }) {
             return
         }
         if (typed.trim().toLowerCase() == currentElement.data[1].trim().toLowerCase()) {
-            if(elementsDone.length >= arrayDict.length){
+            if (elementsDone.length >= information.length) {
+                setsShowElementsDone(true)
                 toastr.warning("You have finished the words")
                 return
             }
@@ -59,11 +61,7 @@ export function Cards({ arrayDict, onRebootCards }) {
             setElementsDone([...elementsDone, newElementDone])
             toastr.success(`Well done!! ${currentElement.counter} attempts`)
             inputRef.current.value = ''
-            addACurrentValue()
-            if (!information.length) {
-                setsShowElementsDone(true)
-            }
-
+            setCurrentElementHelp()
         } else {
 
             currentElement.counter++;
@@ -86,15 +84,10 @@ export function Cards({ arrayDict, onRebootCards }) {
         }
     }
     const handleRebootCards = () => {
-        window.location.reload()
-        // console.log(arrayDict.length,"GENERAL")
-        // console.log(information, currentElement, "++++++")
-        // setElementsDone([])
-        // setInformation(arrayDict)
-        // setsShowElementsDone(false)
-        // addACurrentValue()
-        // console.log(information, currentElement, "_____")
-        // // onRebootCards()
+        onRebootCards()
+        setElementsDone([])
+        setsShowElementsDone(false)
+        setCurrentElementHelp()
     }
     function ShowElementsDone() {
         try {
@@ -114,7 +107,7 @@ export function Cards({ arrayDict, onRebootCards }) {
             </div>
         )
     }
-    console.log(currentElement)
+
     return (
         <div className="container mt-2">
             {showButton ? (
