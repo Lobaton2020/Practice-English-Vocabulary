@@ -16,7 +16,7 @@ export function ShowVocabulary({ vocabularyList }) {
         const dataParsed = vocabularyList.map(([key, value]) => ({ data: [value, key] }))
         return (
             <>
-                <button class="btn" onClick={() => setShowButton(!showButton)}>Cerrar</button>
+                <button className="btn" onClick={() => setShowButton(!showButton)}>Cerrar</button>
                 <ListVocabulary arrayElements={dataParsed} showConter={false} />
             </>
         )

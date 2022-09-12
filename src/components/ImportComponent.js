@@ -36,14 +36,14 @@ export function Import({ onRebootCards }) {
     };
     function ImportProcess() {
         return (<>
-            <div class="form-group">
+            <div className="form-group">
                 <label for="exampleFormControlTextarea1">
                     Import text example: name:nombre
                     * be carefull with the linenew
                 </label>
                 <textarea
                     rows="20"
-                    class="form-control"
+                    className="form-control"
                     ref={textAreaRef}
                     id="exampleFormControlTextarea1"
                 >

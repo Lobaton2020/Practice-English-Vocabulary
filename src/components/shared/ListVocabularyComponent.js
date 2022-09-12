@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { ACTIONS, AppContext } from "../../App";
 import { DataService } from "../../data/data.service";
+import AddItemVocabulary from "./AddItemVocabilary";
 
 export function ListVocabulary({ arrayElements, showConter = true }) {
     const [state, dispatch] = useContext(AppContext);
@@ -13,6 +14,8 @@ export function ListVocabulary({ arrayElements, showConter = true }) {
         })
     };
     return (
+        <>
+            <AddItemVocabulary />
         <ul className="list-group my-3">
             {arrayElements.map((item, i) => {
                 const [espanol, english] = item.data;
@@ -27,5 +30,6 @@ export function ListVocabulary({ arrayElements, showConter = true }) {
                 )
             })}
         </ul>
+        </>
     )
 }
